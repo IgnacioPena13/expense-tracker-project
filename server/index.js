@@ -1,60 +1,33 @@
 const express = require("express");
 const cors = require("cors");
 const PORT = process.env.PORT || 5000;
+const userRoutes = require("./Routes/userRoutes");
+const expenseRoutes = require("./Routes/expenseRoutes");
 const dotenv = require("dotenv");
 dotenv.config();
 const mongoose = require("mongoose");
-mongoose.connect(process.env.MONGO_URI, {});
+const authRoutes = require("./Routes/authRoutes");
+const bodyParser = require("body-parser");
 
+const app = express();
+app.use(cors());
+app.use(express.json());
+app.use(bodyParser.json());
+
+mongoose.connect(process.env.MONGO_URI, {});
 const db = mongoose.connection;
 db.on("error", (error) => console.error(error));
 db.once("open", () => console.log("Connected to MongoDB - Congrats!"));
 
-const app = express();
-app.use(cors());
+app.use("/api/users", userRoutes);
+app.use("/api/expenses", expenseRoutes);
+app.use("/api/auth", authRoutes);
 
-const users = [
-  {
-    id: 1,
-    name: "Alice Johnson",
-    email: "alice.johnson@example.com",
-    age: 28,
-    isActive: true,
-  },
-  {
-    id: 2,
-    name: "Bob Smith",
-    email: "bob.smith@example.com",
-    age: 34,
-    isActive: false,
-  },
-  {
-    id: 3,
-    name: "Charlie Davis",
-    email: "charlie.davis@example.com",
-    age: 22,
-    isActive: true,
-  },
-  {
-    id: 4,
-    name: "Diana Martinez",
-    email: "diana.martinez@example.com",
-    age: 30,
-    isActive: false,
-  },
-  {
-    id: 5,
-    name: "Ethan Brown",
-    email: "ethan.brown@example.com",
-    age: 25,
-    isActive: true,
-  },
-];
-
-app.get("/api/users", (req, res) => {
-  res.send(users);
+app.get("/", (req, res) => {
+  res.send(
+    "<h1>Welcome to my expense tracker API</h1> <br /> <ul><li>For users: <b>/api/users</b></li><li>For expenses: <b>/api/expenses</b></li></ul>"
+  );
 });
-
 app.listen(PORT, () => {
   console.log("Server is running in port ", PORT);
 });
