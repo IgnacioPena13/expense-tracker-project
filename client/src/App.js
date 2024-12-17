@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import Background from "./components/background";
 
 const App = () => {
   const [backendData, setBackendData] = useState([{}]);
@@ -18,15 +19,16 @@ const App = () => {
 
   return (
     <div className="App">
-      {backendData.map((user) => (
+      <Background />
+      {/* {backendData.map((user) => (
         <div key={user.id}>
           <p>{user.name}</p>
           <p>{user.id}</p>
           <p>{user.email}</p>
           <p>{user.age}</p>
           <p>{user.isActive === true ? "Active" : "Inactive"}</p>
-        </div>
-      ))}
+        </div> 
+      ))}*/}
     </div>
   );
 };
