@@ -10,7 +10,12 @@ const authRoutes = require("./Routes/authRoutes");
 const bodyParser = require("body-parser");
 
 const app = express();
-app.use(cors());
+app.use(
+  cors({
+    origin: "http://localhost:3000",
+    methods: ["POST"],
+  })
+);
 app.use(express.json());
 app.use(bodyParser.json());
 

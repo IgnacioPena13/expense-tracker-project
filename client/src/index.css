@@ -3,32 +3,119 @@
   padding: 0;
   box-sizing: border-box;
 }
-
-p {
-  color: white;
+html {
+  min-height: 100%;
+  background: linear-gradient(300deg, #b55c6c, #61305d, #e77c7c);
+  background-size: 180% 180%;
+  animation: gradient-animation 18s ease infinite;
 }
-/* Fractal Plaid Background */
-.fractal-background {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background: linear-gradient(45deg, #333 25%, transparent 25%) -50px 0/100px 100px,
-    linear-gradient(135deg, #333 25%, transparent 25%) -50px 0/100px 100px,
-    linear-gradient(45deg, transparent 75%, #111 75%) -50px 0/100px 100px,
-    linear-gradient(135deg, transparent 75%, #111 75%) -50px 0/100px 100px;
-  background-color: #222;
-  animation: animatePlaid 5s linear infinite;
-  z-index: -1;
-}
-
-/* Fractal Plaid Animation */
-@keyframes animatePlaid {
+@keyframes gradient-animation {
   0% {
-    background-position: 0 0, 0 0, 0 0, 0 0;
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
   }
   100% {
-    background-position: 100px 100px, -100px 100px, 100px -100px, -100px -100px;
+    background-position: 0% 50%;
   }
+}
+
+.navbar {
+  width: 100%;
+  height: 6vh;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #61305d;
+  color: white;
+}
+.navbar button {
+  background-color: #61305d;
+  color: white;
+  border: none;
+  cursor: pointer;
+  height: 100%;
+  width: 33%;
+  cursor: pointer;
+}
+.navbar button:hover {
+  background-color: #b55c6c;
+  animation: ease-in-out;
+  transition: 0.3s;
+}
+.new-expense-btn {
+  position: fixed;
+  bottom: 5%;
+  left: 2%;
+  padding: 5px;
+  background-color: #e77c7c;
+  border-style: solid;
+  border-radius: 10px;
+  cursor: pointer;
+}
+.session-forms {
+  border: black solid 5px;
+  padding: 3%;
+  margin: 10px;
+  width: 40%;
+  display: flex;
+  flex-direction: column;
+  color: white;
+  font-weight: bold;
+  background-color: #b55c6c;
+}
+.session-forms input {
+  margin: 5px;
+  padding: 5px;
+  border-radius: 5px;
+  border: none;
+}
+.send-button:hover {
+  animation: ease-in-out;
+  transition: 0.3s;
+  background-color: aliceblue;
+
+  box-shadow: inset 0 0 5px gray;
+}
+
+.expense-form {
+  border: black solid 5px;
+  padding: 3%;
+  margin: 10px;
+  width: 40%;
+  display: flex;
+  flex-direction: column;
+  color: white;
+  font-weight: bold;
+  background-color: #b55c6c;
+}
+.expense-form input {
+  margin: 5px;
+  padding: 5px;
+  border-radius: 5px;
+  border: none;
+}
+.expense-form select {
+  margin: 5px;
+  padding: 5px;
+  border-radius: 5px;
+  border: none;
+}
+table {
+  width: 80%;
+  border-collapse: collapse;
+  border: black 3px solid;
+  margin: 10px;
+}
+table > tr,
+th,
+td {
+  background-color: #61305d;
+  border: black 3px solid;
+  color: white;
+  font-weight: bold;
+}
+table #month {
+  display: flex;
 }
