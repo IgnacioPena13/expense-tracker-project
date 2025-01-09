@@ -14,14 +14,13 @@ const getAllExpenses = async (req, res) => {
 
 const createExpense = async (req, res) => {
   try {
-    const { name, amount, category, description } = req.body;
+    const { amount, category, description } = req.body;
 
     if (description.length < 4)
       return res.status(400).json({ message: "Description too short" });
 
     const newExpense = new Expense({
       user: req.user.userId,
-      name,
       amount,
       category,
       description,
@@ -45,7 +44,6 @@ const updateExpense = async (req, res) => {
       return res.status(400).json({ message: "User not found" });
     }
 
-    expense.name = req.body.name || expense.name;
     expense.amount = req.body.amount || expense.amount;
     expense.category = req.body.category || expense.category;
     expense.description = req.body.description || expense.description;

@@ -2,44 +2,40 @@ import React, { useState } from "react";
 import axios from "axios";
 
 const RegisterForm = () => {
-  const [post, setPost] = useState({
-    email: "",
-    password: "",
-  });
-  const handleInput = (event) => {
-    setPost({ [event.target.name]: event.target.value });
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const handleSubmit = async () => {
+    try {
+      const url = `http://localhost:5000/api/users`;
+      const res = await axios.post(url, { name, email, password });
+    } catch (error) {
+      console.error("Error: ", error);
+    }
   };
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    console.log(post);
-    axios
-      .post(`${process.env.REACT_APP_BASE_URL}/api/users`, { post })
-      .then((response) => console.log(response))
-      .catch((error) => console.error(error));
-  };
+
   return (
     <div>
-      <form onSubmit={handleSubmit} className="session-forms">
-        <label htmlFor="name">First name: </label>
+      <form
+        className="session-forms"
+        onSubmit={(e) => {
+          e.preventDefault();
+          handleSubmit();
+        }}
+      >
+        <label htmlFor="name">Enter your name: </label>
         <input
-          type="email"
-          onChange={handleInput}
-          name="email-log"
-          id="email-log"
-          required
-        />
-        <label htmlFor="name">Last name: </label>
-        <input
-          type="email"
-          onChange={handleInput}
-          name="email-log"
-          id="email-log"
+          type="text"
+          onChange={(e) => setName(e.target.value)}
+          name="name"
+          id="name"
           required
         />
         <label htmlFor="email-log">E-mail: </label>
         <input
           type="email"
-          onChange={handleInput}
+          onChange={(e) => setEmail(e.target.value)}
           name="email-log"
           id="email-log"
           required
@@ -47,13 +43,13 @@ const RegisterForm = () => {
         <label htmlFor="password">Password: </label>
         <input
           type="password"
-          onChange={handleInput}
+          onChange={(e) => setPassword(e.target.value)}
           name="password"
           id="password"
           minLength={8}
           required
         />
-        <input type="submit" value="Sign in" />
+        <input type="submit" value="Register" />
       </form>
     </div>
   );

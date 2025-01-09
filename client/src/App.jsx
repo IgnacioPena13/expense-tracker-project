@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-
 import LoginForm from "./components/loginForm";
 import RegisterForm from "./components/registerForm";
 import TableExpenses from "./components/tableExpenses";
@@ -16,6 +15,7 @@ const App = () => {
         const response = await fetch(`http://localhost:5000/api/users`);
         const data = await response.json();
         setBackendData(data);
+        console.log(data);
       } catch (error) {
         console.error("Error: ", error);
       }
