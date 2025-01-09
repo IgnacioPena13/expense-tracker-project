@@ -12,9 +12,8 @@ const LoginForm = () => {
   };
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log(post);
     axios
-      .post(`${process.env.REACT_APP_BASE_URL}/api/users`, { post })
+      .post(`http://localhost:5000/api/users/login`, { post })
       .then((response) => console.log(response))
       .catch((error) => console.error(error));
   };

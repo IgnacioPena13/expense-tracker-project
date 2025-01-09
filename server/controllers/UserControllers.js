@@ -40,6 +40,10 @@ const deleteUser = async (req, res) => {
 };
 const createUser = async (req, res) => {
   try {
+    const userExists = await user.findOne({ email: req.body.email });
+    if (userExists) {
+      return res.status(400).json({ message: "User already exists" });
+    }
     const { name, email, password } = req.body;
     if (password.length < 8)
       return res
@@ -62,6 +66,36 @@ const createUser = async (req, res) => {
     console.error(error);
   }
 };
+const logInUser = async (req, res) => {
+  const { email, password } = req.body;
+
+  // Validate input
+  if (!email || !password) {
+    return res.status(400).json({ message: "Email and password are required" });
+  }
+
+  try {
+    // Find the user by email
+    const user = await User.findOne({ email });
+    if (!user) {
+      return res.status(400).json({ message: "User not found" });
+    }
+
+    // Compare the plaintext password with the hashed password
+    const isMatch = await bcrypt.compare(password, user.password);
+    if (isMatch) {
+      return res.status(200).json({ message: "User logged in successfully" });
+    } else {
+      return res.status(400).json({ message: "Invalid credentials" });
+    }
+  } catch (error) {
+    console.error("Error logging in user:", error);
+    return res
+      .status(500)
+      .json({ message: "Server error. Please try again later." });
+  }
+};
+
 const updateUser = async (req, res) => {
   try {
     const user = await User.findById({ _id: req.params.id });
@@ -98,4 +132,5 @@ module.exports = {
   deleteUser,
   updateUser,
   getUserById,
+  logInUser,
 };

@@ -1,9 +1,23 @@
 import React from "react";
 
 const ExpenseForm = () => {
+  const handleSubmit = async () => {
+    try {
+      const url = "http://localhost:5000/api/expenses";
+      const res = await axios.post(url, { category, description, amount });
+    } catch (error) {
+      console.error("Error: ", error);
+    }
+  };
   return (
     <div>
-      <form className="expense-form">
+      <form
+        className="expense-form"
+        onSubmit={(e) => {
+          e.preventDefault();
+          handleSubmit();
+        }}
+      >
         <label htmlFor="expense-category">Choose a Category</label>
         <select name="category" id="category">
           <optgroup label="Essential">

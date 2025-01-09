@@ -1,14 +1,14 @@
 const express = require("express");
 const cors = require("cors");
+const mongoose = require("mongoose");
 const PORT = process.env.PORT || 5000;
 const userRoutes = require("./Routes/userRoutes");
 const expenseRoutes = require("./Routes/expenseRoutes");
 const dotenv = require("dotenv");
-dotenv.config();
-const mongoose = require("mongoose");
 const authRoutes = require("./Routes/authRoutes");
 const bodyParser = require("body-parser");
 
+dotenv.config();
 const app = express();
 app.use(
   cors({
