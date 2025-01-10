@@ -40,18 +40,13 @@ const deleteUser = async (req, res) => {
 };
 const createUser = async (req, res) => {
   try {
-    const userExists = await user.findOne({ email: req.body.email });
-    if (userExists) {
-      return res.status(400).json({ message: "User already exists" });
-    }
     const { name, email, password } = req.body;
     if (password.length < 8)
       return res
         .status(400)
-        .json({ message: "Passwords must be longer than 8 characters" });
+        .json({ message: "Password must be longer than 8 characters" });
 
     const encriptedPass = await bcrypt.hash(password, 12);
-
     const newUser = new User({
       name,
       email,
@@ -64,6 +59,10 @@ const createUser = async (req, res) => {
     return res.status(201).json({ message: "User created successfully", user });
   } catch (error) {
     console.error(error);
+  }
+  const userExists = await User.findOne({ email: req.body.email });
+  if (userExists) {
+    return res.status(400).json({ message: "User already exists" });
   }
 };
 const logInUser = async (req, res) => {
@@ -111,6 +110,7 @@ const updateUser = async (req, res) => {
       user.password = user.password;
     }
     user.email = req.body.email || user.email;
+    user.isActive = req.body.isActive || user.isActive;
     user.isAdmin = req.body.isAdmin || user.isAdmin;
     const updatedUser = await user.save();
 

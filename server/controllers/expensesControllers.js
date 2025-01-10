@@ -14,7 +14,7 @@ const getAllExpenses = async (req, res) => {
 
 const createExpense = async (req, res) => {
   try {
-    const { amount, category, description } = req.body;
+    const { category, description, amount } = req.body;
 
     if (description.length < 4)
       return res.status(400).json({ message: "Description too short" });
