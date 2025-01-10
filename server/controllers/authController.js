@@ -1,6 +1,7 @@
 const bcrypt = require("bcrypt");
 const User = require("../models/userModel");
 const jwt = require("jsonwebtoken");
+const blacklist = new Set();
 
 const login = async (req, res, next) => {
   try {
@@ -26,7 +27,13 @@ const login = async (req, res, next) => {
 };
 const logout = async (req, res, next) => {
   try {
-    const user = await User.findOneAndUpdate({ email }, { isActive: false });
+    const token = req.haders.authentication.split(" ")[1];
+    if (token) {
+      blacklist.add(token);
+      res.status(200).json({ message: "Logout successful" });
+    } else {
+      res.status(400).json({ message: "Invalid token or no token provided" });
+    }
   } catch (error) {
     console.error(error);
     next(error);
