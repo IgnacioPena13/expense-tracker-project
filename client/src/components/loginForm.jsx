@@ -2,20 +2,21 @@ import React, { useState } from "react";
 import axios from "axios";
 
 const LoginForm = () => {
-  const [post, setPost] = useState({
-    email: "",
-    password: "",
-  });
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
-  const handleInput = (event) => {
-    setPost({ [event.target.name]: event.target.value });
-  };
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    axios
-      .post(`http://localhost:5000/api/users/login`, { post })
-      .then((response) => console.log(response))
-      .catch((error) => console.error(error));
+    try {
+      const response = await axios.post(
+        `http://localhost:5000/api/auth/login`,
+        { email, password }
+      );
+      // localStorage.setItem("token", response.data.token);
+      console.log(response);
+    } catch (error) {
+      console.error(error);
+    }
   };
   return (
     <div>
@@ -23,7 +24,7 @@ const LoginForm = () => {
         <label htmlFor="email-log">E-mail: </label>
         <input
           type="email"
-          onChange={handleInput}
+          onChange={(e) => setEmail(e.target.value)}
           name="email-log"
           id="email-log"
           required
@@ -31,7 +32,7 @@ const LoginForm = () => {
         <label htmlFor="password">Password: </label>
         <input
           type="password"
-          onChange={handleInput}
+          onChange={(e) => setPassword(e.target.value)}
           name="password"
           id="password"
           required

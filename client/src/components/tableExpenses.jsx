@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 
 const TableExpenses = () => {
   const [data, setData] = useState({});
-
   const getExpenses = async () => {
     try {
       const response = await fetch("http://localhost:5000/api/expenses");
@@ -16,7 +15,6 @@ const TableExpenses = () => {
   useEffect(() => {
     getExpenses();
   }, []);
-  console.log("data", data);
   return (
     <div>
       <table>

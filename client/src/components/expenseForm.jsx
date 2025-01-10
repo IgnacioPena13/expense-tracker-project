@@ -1,10 +1,18 @@
-import React from "react";
+import React, { useState } from "react";
+import axios from "axios";
 
 const ExpenseForm = () => {
+  const [category, setCategory] = useState("");
+  const [description, setDescription] = useState("");
+  const [amount, setAmount] = useState("");
   const handleSubmit = async () => {
     try {
-      const url = "http://localhost:5000/api/expenses";
-      const res = await axios.post(url, { category, description, amount });
+      const res = await axios.post("http://localhost:5000/api/expenses", {
+        category,
+        description,
+        amount,
+      });
+      console.log(res.data);
     } catch (error) {
       console.error("Error: ", error);
     }
@@ -19,7 +27,14 @@ const ExpenseForm = () => {
         }}
       >
         <label htmlFor="expense-category">Choose a Category</label>
-        <select name="category" id="category">
+        <select
+          name="category"
+          id="category"
+          onChange={(e) => {
+            setCategory(e.target.value);
+          }}
+          required
+        >
           <optgroup label="Essential">
             <option value="rent_mortgage">Rent/Mortgage</option>
             <option value="groceries" selected>
@@ -51,9 +66,25 @@ const ExpenseForm = () => {
           </optgroup>
         </select>
         <label htmlFor="description">Description</label>
-        <input type="text" name="description" id="description" required />
+        <input
+          type="text"
+          name="description"
+          id="description"
+          onChange={(e) => {
+            setDescription(e.target.value);
+          }}
+          required
+        />
         <label htmlFor="amount">Amount</label>
-        <input type="number" name="amount" id="amount" required />
+        <input
+          type="number"
+          name="amount"
+          id="amount"
+          onChange={(e) => {
+            setAmount(e.target.value);
+          }}
+          required
+        />
         <input type="submit" value="Add Expense" />
       </form>
     </div>
