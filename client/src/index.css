@@ -36,10 +36,30 @@ html {
   border: none;
   cursor: pointer;
   height: 100%;
-  width: 33%;
+  width: 50%;
   cursor: pointer;
 }
 .navbar button:hover {
+  background-color: #b55c6c;
+  animation: ease-in-out;
+  transition: 0.3s;
+}
+.navbar-logged-in {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #61305d;
+  color: white;
+}
+.navbar-logged-in button {
+  background-color: #61305d;
+  color: white;
+  border: none;
+  height: 100%;
+  width: 50%;
+  cursor: pointer;
+}
+.navbar-logged-in button:hover {
   background-color: #b55c6c;
   animation: ease-in-out;
   transition: 0.3s;
@@ -108,8 +128,7 @@ table {
   border: black 3px solid;
   margin: 10px;
 }
-table > tr,
-th,
+table tr,
 td {
   background-color: #61305d;
   border: black 3px solid;

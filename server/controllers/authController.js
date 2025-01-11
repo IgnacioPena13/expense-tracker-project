@@ -25,6 +25,7 @@ const login = async (req, res, next) => {
     next(error);
   }
 };
+
 const logout = async (req, res, next) => {
   try {
     const token = req.haders.authentication.split(" ")[1];
