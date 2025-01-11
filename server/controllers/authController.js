@@ -43,4 +43,5 @@ const logout = async (req, res, next) => {
 module.exports = {
   login,
   logout,
+  blacklist,
 };
