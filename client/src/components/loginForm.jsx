@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useContext } from "react";
 import axios from "axios";
 import { UserContext } from "./userContext";
 
@@ -16,7 +16,6 @@ const LoginForm = ({ setSessionToken }) => {
         { email, password }
       );
       const UserData = response.data;
-      console.log(response);
       const userName = UserData.user.name;
       setUser(userName);
       localStorage.setItem("token", response.data.token);
