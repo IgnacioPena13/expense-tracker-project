@@ -12,7 +12,7 @@ const ExpenseForm = () => {
         description,
         amount,
       });
-      console.log(res.data);
+      console.log(res);
     } catch (error) {
       console.error("Error: ", error);
     }

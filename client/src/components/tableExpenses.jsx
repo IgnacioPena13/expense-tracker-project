@@ -7,7 +7,7 @@ const TableExpenses = () => {
       const response = await fetch("http://localhost:5000/api/expenses");
       const data = await response.json();
       setData(data);
-      console.log(data);
+      // console.log(data)
     } catch (error) {
       console.error(error.message);
     }

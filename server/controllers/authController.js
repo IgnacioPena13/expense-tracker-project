@@ -28,7 +28,7 @@ const login = async (req, res, next) => {
 
 const logout = async (req, res, next) => {
   try {
-    const token = req.haders.authentication.split(" ")[1];
+    const token = req.headers.authentication.split(" ")[1];
     if (token) {
       blacklist.add(token);
       res.status(200).json({ message: "Logout successful" });
