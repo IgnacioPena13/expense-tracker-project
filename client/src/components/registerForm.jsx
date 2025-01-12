@@ -10,6 +10,8 @@ const RegisterForm = () => {
     try {
       const url = `http://localhost:5000/api/users`;
       const res = await axios.post(url, { name, email, password });
+      console.log(res.data);
+      alert(`Thanks for registering, ${res.data.user.name}! Please log in.`);
     } catch (error) {
       console.error("Error: ", error);
     }
@@ -19,8 +21,7 @@ const RegisterForm = () => {
     <div>
       <form
         className="session-forms"
-        onSubmit={(e) => {
-          e.preventDefault();
+        onSubmit={() => {
           handleSubmit();
         }}
       >
@@ -49,7 +50,7 @@ const RegisterForm = () => {
           minLength={8}
           required
         />
-        <input type="submit" value="Register" />
+        <input type="submit" value="Register" className="send-button" />
       </form>
     </div>
   );

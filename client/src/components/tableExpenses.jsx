@@ -1,20 +1,29 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useContext } from "react";
+import { ExpenseContext } from "./expenseContext";
 
 const TableExpenses = () => {
-  const [data, setData] = useState({});
+  const { expenses, setExpenses } = useContext(ExpenseContext);
+
   const getExpenses = async () => {
+    const token = localStorage.getItem("token");
     try {
-      const response = await fetch("http://localhost:5000/api/expenses");
+      const response = await fetch("http://localhost:5000/api/expenses", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       const data = await response.json();
-      setData(data);
-      // console.log(data)
+      setExpenses(data);
+      console.log("for table: ", data);
     } catch (error) {
       console.error(error.message);
     }
   };
+
   useEffect(() => {
     getExpenses();
   }, []);
+
   return (
     <div>
       <table>
@@ -29,8 +38,8 @@ const TableExpenses = () => {
             <th>Description</th>
             <th>Amount</th>
           </tr>
-          {data.expenses &&
-            data.expenses.map((expense) => (
+          {expenses &&
+            expenses.map((expense) => (
               <tr key={expense.id}>
                 <td>{expense.category}</td>
                 <td>{expense.description}</td>

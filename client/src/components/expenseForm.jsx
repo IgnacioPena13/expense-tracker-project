@@ -1,22 +1,35 @@
 import React, { useState, useContext } from "react";
 import axios from "axios";
+import { ExpenseContext } from "./expenseContext";
 
 const ExpenseForm = () => {
   const [category, setCategory] = useState("");
   const [description, setDescription] = useState("");
   const [amount, setAmount] = useState("");
+  const { addExpense } = useContext(ExpenseContext);
+
   const handleSubmit = async () => {
+    const token = localStorage.getItem("token");
     try {
-      const res = await axios.post("http://localhost:5000/api/expenses", {
-        category,
-        description,
-        amount,
-      });
-      console.log(res);
+      const res = await axios.post(
+        "http://localhost:5000/api/expenses",
+        {
+          category,
+          description,
+          amount,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      addExpense(res.data);
     } catch (error) {
       console.error("Error: ", error);
     }
   };
+
   return (
     <div>
       <form
@@ -85,7 +98,7 @@ const ExpenseForm = () => {
           }}
           required
         />
-        <input type="submit" value="Add Expense" />
+        <input type="submit" value="Add Expense" className="send-button" />
       </form>
     </div>
   );
